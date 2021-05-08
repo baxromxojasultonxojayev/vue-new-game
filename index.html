@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <header>
+    <h1>Simple Game </h1>
+  </header>
+  <div id="game">
+    <section id="monster" class="container">
+      <h2>Weird Monster Health</h2>
+      <div class="healthbar" :style="monsterBarStyle">
+        <div class="healthbar_value" ></div>
+      </div>
+    </section>
+    <section id="player" class="container">
+      <h2>User Health</h2>
+      <div class="healthbar" :style="playerBarStyle">
+        <div class="healthbar_value"></div>
+      </div>
+    </section>
+    <section class="container"  v-if="winner">
+      <h1>O'yin Tugadi</h1>
+      <h3 v-if="winner == 'player'">Tabrilayman siz yuttingiz</h3>
+      <h3 v-else-if="winner == 'maxluq'">Afsus siz yutqazdingiz</h3>
+      <h3 v-else>Durrang</h3>
+      <button @click="StartNewGame">Start new game</button>
+    </section>
+    <section id="controls" v-if="!winner">
+      <button @click="MonsterHujumi">Attack</button>
+      <button :disabled="playerSpecialAttack" @click="MaxsusHujum">Best attack</button>
+      <button :disabled="treatment" @click="Davolash">Treating</button>
+      <button @click="Surrender">Surrender</button>
+    </section>
+    <section id="log" class="container">
+      <h2>List Of Attack</h2>
+      <ul>
+        <li v-for="list in attackList">
+          <span :class="{'log--player': list.actionBy==='player', 'log--monster': list.actionBy==='monster'}">
+            {{ list.actionBy === 'player' ? 'Player' : 'Maxluq'}}
+          </span>
+          <span v-if="list.actionType =='heal'">
+            treated himself - <span class="losg--heal">{{ list.actionValue }}</span>
+          </span>
+          <span v-else>
+            Hujumlari  <span class="log--demage">{{ list.actionValue }}</span>
+          </span>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/vue@next" defer></script>
+  <script src="app.js" defer></script>
+
+</body>
+
+</html>
